@@ -1,9 +1,11 @@
 import edu.sharif.selab.models.EmailMessage;
 import edu.sharif.selab.models.Message;
 import edu.sharif.selab.models.SmsMessage;
+import edu.sharif.selab.models.TelegramMessage; // Import the new class
 import edu.sharif.selab.services.EmailMessageService;
 import edu.sharif.selab.services.MessageService;
 import edu.sharif.selab.services.SmsMessageService;
+import edu.sharif.selab.services.TelegramMessageService; // Import the new service
 
 import java.util.Scanner;
 
@@ -21,6 +23,7 @@ public class Main {
 
             System.out.println("In order to send Sms message enter 1");
             System.out.println("In order to send Email message enter 2");
+            System.out.println("In order to send Telegram message enter 3"); // Add this line
             System.out.println("In order to Exit, Enter 0");
 
             userAnswer= scanner.nextInt();
@@ -57,6 +60,20 @@ public class Main {
                     message = emailMessage;
                     break;
             }
+            case 3: // Add this whole case
+                TelegramMessage telegramMessage = new TelegramMessage();
+                System.out.print("Enter source ID : ");
+                source = scanner.next();
+                telegramMessage.setSourceId(source);
+                System.out.print("Enter target ID : ");
+                target = scanner.next();
+                telegramMessage.setTargetId(target);
+                System.out.println("Write Your Message : ");
+                content = scanner.next();
+                telegramMessage.setContent(content);
+                message = telegramMessage;
+                break;
+        }
 
             if(message instanceof SmsMessage){
                 messageService = new SmsMessageService();
@@ -64,6 +81,9 @@ public class Main {
             }else if(message instanceof EmailMessage){
                 messageService = new EmailMessageService();
                 messageService.sendEmailMessage((EmailMessage) message);
+            }else if(message instanceof TelegramMessage){ // Add this whole block
+                messageService = new TelegramMessageService();
+                messageService.sendTelegramMessage((TelegramMessage) message);
             }
 
         }while (true);
