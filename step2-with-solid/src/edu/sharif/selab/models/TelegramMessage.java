@@ -1,22 +1,34 @@
 package edu.sharif.selab.models;
 
-public class TelegramMessage extends Message {
+public class TelegramMessage implements Message {
     private String sourceId;
     private String targetId;
-
-    public String getSourceId() {
-        return sourceId;
-    }
+    private String content;
 
     public void setSourceId(String sourceId) {
         this.sourceId = sourceId;
     }
 
-    public String getTargetId() {
+    public void setTargetId(String targetId) {
+        this.targetId = targetId;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    @Override
+    public String getSource() {
+        return sourceId;
+    }
+
+    @Override
+    public String getTarget() {
         return targetId;
     }
 
-    public void setTargetId(String targetId) {
-        this.targetId = targetId;
+    @Override
+    public String getContent() {
+        return content;
     }
 }
